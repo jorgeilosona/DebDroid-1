@@ -49,7 +49,7 @@ to gain access via sudo.
  
  # Starting The Container
  You can start the container by typing: \
- ```debdroid --launch``` or ```debian --launch-su``` (as root user)
+ ```debdroid --launch``` or ```debdroid --launch-su``` (as root user) or ```debdroid --launch-cli``` (without VNC)
  
  and it should drop you to debian shell \
  You can connect to the GUI by connecting the VNC Port 5901 with Xterm (without any WM or DE) \
