@@ -30,6 +30,7 @@ show_help(){
 	echo " --uninstall	Uninstalls a Debian Distribution"
 	echo " --launch	Launches Debian Distribution as Regular User"
 	echo " --launch-su	Launches Debian Distribution as Root"
+	echo " --launch-cli	Launches Debian Distribution without VNC"
 	exit 2
 }
 
@@ -167,6 +168,41 @@ launch-su() {
 	debdroid-stop-server
 }
 
+launch-cli() {
+	if [ -e $STATUS ]; then
+    		echo ""
+	else
+    		echo "Cannot start Debian Container. Please install it using debdroid --install"
+		exit 2
+	fi
+	unset LD_PRELOAD
+	proot --link2symlink --kill-on-exit \
+	-0 -r $ROOTFS \
+	-b /dev \
+	-b /proc \
+	-b /sys \
+	-b /dev/urandom:/dev/random \
+	-b /proc/self/fd:/dev/fd \
+	-b /proc/self/fd/0:/dev/stdin \
+	-b /proc/self/fd/1:/dev/stdout \
+	-b /proc/self/fd/2:/dev/stderr \
+	-b $PREFIX/tmp:/dev/shm \
+	-b $PREFIX/tmp:/tmp \
+	-b $ROOTFS/proc/stat:/proc/stat \
+	-b $ROOTFS/proc/version:/proc/version \
+	-b /storage/emulated/0:/sdcard \
+	-b /data \
+	-b /system \
+	-b /:/host-rootfs \
+	/usr/bin/env -i \
+	TERM=xterm-256color \
+	HOME=/root \
+	USER=root \
+	PATH="$PATHBASE" \
+	TMPDIR=/tmp \
+	/bin/su -l $(cat $ROOTFS/etc/userinfo.rc)
+}
+
 if [ $# = 0 ]; then
 	show_help
 fi
@@ -184,6 +220,9 @@ case "$CMD" in
 		;;
 	--launch-su)
 		launch-su
+		;;
+	--launch-cli)
+		launch-cli
 		;;
 	-h|--show-help)
 		show_help
