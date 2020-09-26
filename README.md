@@ -61,7 +61,8 @@ to gain access via sudo.
  if you're using Termux VNC. type the command: \
  `debdroid-stop-server`
  
- The Reason why it won't start is to prevent the profile.d from multiplying at logon.
+ The Reason why it won't start is to prevent the profile.d from multiplying at logon. as a walkaround. launch the debian shell without VNC:
+ `debdroid --launch-cli`
  
  To Shutdown the linux environment. simply type `exit` to debian shell \
  Note that it will kill all processes at exit. and stops VNC Server as well to prevent battery drainage
