@@ -74,7 +74,7 @@ to gain access via sudo.
 
 # Stay In Touched?
 [Discord](http://bit.ly/WMCBDiscord) \
-[Twitter](http://twitter.com/wmcbtech30) \ 
-[YouTube](https://www.youtube.com/wmcbtech) \
+[Twitter](http://twitter.com/wmcbtech30)\
+[YouTube](https://www.youtube.com/wmcbtech) 
 
 Make an issue if you have problems regarding with this problems
