@@ -3,7 +3,6 @@ An Easy to use Debian Installer for Android without root
 
 [![Discord](https://img.shields.io/discord/591914197219016707.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://bit.ly/WMCBDiscord)
 
-Support Server
 
 # Features
 * Support for Root and Non-root User Accounts
@@ -72,3 +71,10 @@ to gain access via sudo.
  `debdroid --uninstall`
  
  Note that instead of asking you to delete it. you have 15 seconds before the removal so better to hit Ctrl-C before it's too late
+
+# Stay In Touched?
+[Discord](http://bit.ly/WMCBDiscord)
+[Twitter](http://twitter.com/wmcbtech30)
+[YouTube](https://www.youtube.com/wmcbtech)
+
+Make an issue if you have problems regarding with this problems
