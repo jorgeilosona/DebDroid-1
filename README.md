@@ -10,6 +10,7 @@ An Easy to use Debian Installer for Termux on Android without root
 * Full Debian Environment in your Pocket
 * No Rooting Required
 * Supports Desktop Environment (LXDE, LXQT, Mate, XFCE)
+* Test your Linux packages sandboxed without interfering of your Termux Environment
 
 # Installation
 Installation is quite easy. follow the steps shown below:
