@@ -12,6 +12,8 @@ set -e -u
 apt update &&
 apt upgrade -y &&
 apt install xterm nano sudo busybox udisks2 -y &&
+apt autoremove -y
+apt clean
 
 ## Configure udisks2 as if udisks2 interrupts apt
 echo ""
