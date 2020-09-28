@@ -200,6 +200,8 @@ launch-cli() {
 	PATH="$PATHBASE" \
 	TMPDIR=/tmp \
 	/bin/su -l $(cat $ROOTFS/etc/userinfo.rc)
+	rm -rf $ROOTFS/tmp/* > /dev/null 2>&1
+	rm -rf $ROOTFS/tmp/.* > /dev/null 2>&1
 }
 
 if [ $# = 0 ]; then
