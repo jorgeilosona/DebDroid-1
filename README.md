@@ -3,7 +3,8 @@ An Easy to use Debian Installer for Termux on Android without root
 
 [![Discord](https://img.shields.io/discord/591914197219016707.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://bit.ly/WMCBDiscord)
 
-Learn more about DebDroid with this [wiki](https://github.com/WMCB-Tech/DebDroid/wiki)
+Learn more about DebDroid with this [wiki](https://github.com/WMCB-Tech/DebDroid/wiki) \
+***Updates in DebDroid are Frequent and it's recommended to watch this repo to get latest updates. We provide pre-releases but it's intended for Developers only. pre-releases can be deleted anytime***
 
 # Features
 * Support for Root and Non-root User Accounts
