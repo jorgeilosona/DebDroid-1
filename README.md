@@ -34,7 +34,8 @@ Installation is quite easy. follow the steps shown below:
 I assume that you placed the downloaded file to downloads folder
 
 4.) Install additional Packages. (Without it. the container won't start) \
-`apt install xorg-xhost tigervnc`
+`apt install xorg-xhost tigervnc` \
+Although if you want to use CLI Only. you don't need to install these unless you want to run GUI Apps
 
 # Preparing The Container
 After all packages is installed. you can install it by typing: \
