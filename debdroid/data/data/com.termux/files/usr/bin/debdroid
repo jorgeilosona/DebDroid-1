@@ -66,7 +66,8 @@ install-debian() {
 	install $CONFIG/stat $ROOTFS/proc/stat &&
 	install $CONFIG/version $ROOTFS/proc/version &&
 	install $CONFIG/libdone.so.9 $ROOTFS/usr/lib/.libdone.so.9 &&
-	install $CONFIG/desktop-launch.sh $ROOTFS/etc/profile.d/
+	mkdir -p $ROOTFS/var/binds/ &&
+	install $CONFIG/desktop-launch.sh $ROOTFS/var/binds/desktop-launch.sh &&
 	install -m 755 $CONFIG/distro-config.sh $ROOTFS/opt/distro-config.sh &&
 	bash $CONFIG/configure.sh &&
 	echo "Cleaning Up....."
@@ -97,7 +98,7 @@ launch() {
 		exit 2
 	fi
 	unset LD_PRELOAD
-	vncserver -SecurityTypes none -xstartup $CONFIG/xstartup :1 > /dev/null 2>&1
+	vncserver -SecurityTypes none -xstartup $CONFIG/xstartup -name "DebDroid" :1 > /dev/null 2>&1
 	echo ""
 	echo "VNC Server is Running as Port 5901. as to be able to run GUI Applications"
 	echo "To Stop VNC Server. type 'debdroid-stop-server'"
@@ -115,6 +116,7 @@ launch() {
 	-b $PREFIX/tmp:/tmp \
 	-b $ROOTFS/proc/stat:/proc/stat \
 	-b $ROOTFS/proc/version:/proc/version \
+	-b $ROOTFS/var/binds/desktop-launch.sh:/etc/profile.d/desktop-launch.sh \
 	-b /storage/emulated/0:/sdcard \
 	-b /data \
 	-b /system \
@@ -137,7 +139,7 @@ launch-su() {
 		exit 2
         fi
         unset LD_PRELOAD
-        vncserver -SecurityTypes none -xstartup $CONFIG/xstartup :1 > /dev/null 2>&1
+        vncserver -SecurityTypes none -xstartup $CONFIG/xstartup -name "DebDroid" :1 > /dev/null 2>&1
 	echo ""
         echo "VNC Server is Running as Port 5901. as to be able to run GUI Applications"
 	echo "To Stop VNC Server. type 'debdroid-stop-server'"
@@ -155,6 +157,7 @@ launch-su() {
         -b $PREFIX/tmp:/tmp \
         -b $ROOTFS/proc/stat:/proc/stat \
         -b $ROOTFS/proc/version:/proc/version \
+	-b $ROOTFS/var/binds/desktop-launch.sh:/etc/profile.d/desktop-launch.sh \
         -b /storage/emulated/0:/sdcard \
         -b /data \
         -b /system \
