@@ -9,9 +9,9 @@
 set -e -u
 
 ## Install Packages
-apt update &&
-apt upgrade -y &&
-apt install xterm nano sudo busybox udisks2 -y &&
+apt update
+apt upgrade -y
+apt install xterm nano sudo busybox udisks2 -y
 apt autoremove -y
 apt clean
 
