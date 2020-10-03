@@ -59,7 +59,7 @@ install-debian() {
 			echo "unknown architecture"; exit 1 ;;
 	esac
 	echo "Downloading the Debian Image file....."
-	wget "https://github.com/Techriz/AndronixOrigin/blob/master/Rootfs/Debian/${archurl}/debian-rootfs-${archurl}.tar.xz?raw=true" -O $PREFIX/tmp/dlcache.tar.xz &&
+	wget "https://github.com/WMCB-Tech/AndronixOrigin/raw/master/Rootfs/Debian/${archurl}/debian-rootfs-${archurl}.tar.xz?raw=true" -O $PREFIX/tmp/dlcache.tar.xz &&
 	echo "Unpacking The Base System.... This may take a few minutes"
 	proot --link2symlink tar -xf $PREFIX/tmp/dlcache.tar.xz --exclude dev -C $ROOTFS > /dev/null 2>&1 &&
 	echo "Configuring the Base System.. This may take Several Minutes"
@@ -190,6 +190,7 @@ launch-cli() {
 	-b /proc/self/fd/1:/dev/stdout \
 	-b /proc/self/fd/2:/dev/stderr \
 	-b $PREFIX/tmp:/dev/shm \
+        -b $PREFIX/tmp:/tmp \
 	-b $ROOTFS/proc/stat:/proc/stat \
 	-b $ROOTFS/proc/version:/proc/version \
 	-b /storage/emulated/0:/sdcard \
@@ -202,9 +203,7 @@ launch-cli() {
 	USER=root \
 	PATH="$PATHBASE" \
 	TMPDIR=/tmp \
-	/bin/su -l $(cat $ROOTFS/etc/userinfo.rc)
-	rm -rf $ROOTFS/tmp/* > /dev/null 2>&1
-	rm -rf $ROOTFS/tmp/.* > /dev/null 2>&1
+	/bin/su -l $(cat $ROOTFS/etc/userinfo.rc
 }
 
 if [ $# = 0 ]; then
