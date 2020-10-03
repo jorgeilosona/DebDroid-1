@@ -1,5 +1,5 @@
 #!/data/data/com.termux/files/usr/bin/bash
-### DEBDROID v2.12.
+### DEBDROID v2.13-R2.
 ### Made By WMCB Tech @wmcbtech30
 ### This script should not be modified at some cases
 ### Dependencies Required (x11-repo is needed as there's an issues about tigervnc in debian)
