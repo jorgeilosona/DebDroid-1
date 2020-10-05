@@ -78,9 +78,12 @@ to gain access via sudo.
  
  Note that instead of asking you to delete it. you have 15 seconds before the removal so better to hit Ctrl-C before it's too late
 
-# Building your own from source
-You can build your own. go to releases and download the [source](https://github.com/WMCB-Tech/DebDroid/releases/download/v2.12/debdroid-2.12-source-pkg.tar.gz) file 
-and Edit it's configuration and build it using `dpkg-deb`
+# Credits
+[Xhost](https://www.computerhope.com/unix/xhost.htm) \
+[PRoot](https://proot-me.github.io/) \
+[TigerVNC](https://tigervnc.org/) \
+[Termux](https://termux.com/) \
+
 
 # Stay In Touched?
 [Discord](http://bit.ly/WMCBDiscord) \
