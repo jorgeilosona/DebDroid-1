@@ -82,7 +82,7 @@ to gain access via sudo.
 [Xhost](https://www.computerhope.com/unix/xhost.htm) \
 [PRoot](https://proot-me.github.io/) \
 [TigerVNC](https://tigervnc.org/) \
-[Termux](https://termux.com/) \
+[Termux](https://termux.com/)
 
 
 # Stay In Touched?
