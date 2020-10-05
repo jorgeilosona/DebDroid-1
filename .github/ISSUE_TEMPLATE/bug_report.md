@@ -13,6 +13,10 @@ assignees: ''
 **Steps to Reproduce**
 <<--- Explain the steps to reproduce a Problem. --->>
 
+**Device Information**
+Android OS: 
+Device Model:
+
 **Screenshots**
 <<--- Screenshots are optional. but it's best to send screenshot about the error --->>
 
