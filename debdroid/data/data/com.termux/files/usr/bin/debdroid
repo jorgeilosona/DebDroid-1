@@ -1,5 +1,5 @@
 #!/data/data/com.termux/files/usr/bin/bash
-### DEBDROID v2.13-R2.
+### DEBDROID v2.14.
 ### Made By WMCB Tech @wmcbtech30
 ### This script should not be modified at some cases
 ### Dependencies Required (x11-repo is needed as there's an issues about tigervnc in debian)
@@ -21,6 +21,15 @@ if [[ $EUID -eq 0 ]]; then
   exit 1
 fi
 
+check-network-connectivity(){
+	if ping -q -c 1 -W 1 8.8.8.8 >/dev/null 2>&1; then
+  		exec
+	else
+  		echo "Cannot connect to network. Try Checking your network connection. Aborting exit code 2"
+		exit 2
+	fi
+}
+
 show_help(){
 	echo "DebDroid: An Easy to Use Debian Installer for non-rooted devices"
 	echo ""
@@ -28,9 +37,10 @@ show_help(){
 	echo ""
 	echo " --install	Installs an Debian Container"
 	echo " --uninstall	Uninstalls a Debian Distribution"
-	echo " --launch	Launches Debian Distribution as Regular User"
-	echo " --launch-su	Launches Debian Distribution as Root"
-	echo " --launch-cli	Launches Debian Distribution without VNC"
+	echo " --launch	Launches Debian Distribution as Regular User (With GUI)"
+	echo " --launch-su	Launches Debian Distribution as Root (With GUI)"
+	echo " --launch-cli	Launches Debian Distribution without GUI"
+        echo " --second-stage	Installs Required Dependencies. Same as '--install-deps' option"
 	exit 2
 }
 
@@ -41,6 +51,8 @@ install-debian() {
 	else
     		echo "Preparing to Install a Debian Container."
 	fi
+        ### Check Network
+        check-network-connectivity
 	### Check for an Architecture
 	case `dpkg --print-architecture` in
 		aarch64)
@@ -103,7 +115,7 @@ launch() {
 	echo "VNC Server is Running as Port 5901. as to be able to run GUI Applications"
 	echo "To Stop VNC Server. type 'debdroid-stop-server'"
 	proot --link2symlink --kill-on-exit \
-	-0 -r $ROOTFS \
+	-0 -r $ROOTFS -p \
 	-b /dev \
 	-b /proc \
 	-b /sys \
@@ -144,7 +156,7 @@ launch-su() {
         echo "VNC Server is Running as Port 5901. as to be able to run GUI Applications"
 	echo "To Stop VNC Server. type 'debdroid-stop-server'"
         proot --link2symlink --kill-on-exit \
-        -0 -r $ROOTFS \
+        -0 -r $ROOTFS -p \
         -b /dev \
         -b /proc \
         -b /sys \
@@ -180,7 +192,7 @@ launch-cli() {
 	fi
 	unset LD_PRELOAD
 	proot --link2symlink --kill-on-exit \
-	-0 -r $ROOTFS \
+	-0 -r $ROOTFS -p \
 	-b /dev \
 	-b /proc \
 	-b /sys \
@@ -206,6 +218,11 @@ launch-cli() {
 	/bin/su -l $(cat $ROOTFS/etc/userinfo.rc
 }
 
+install-deps() {
+	apt install x11-repo -y &&
+	apt install xorg-xhost tigervnc -y
+}
+
 if [ $# = 0 ]; then
 	show_help
 fi
@@ -229,6 +246,9 @@ case "$CMD" in
 		;;
 	-h|--show-help)
 		show_help
+		;;
+        --install-deps|--second-stage)
+		install-deps
 		;;
 	*) echo "Unknown Command: '$CMD'"; exit 2;;
 esac
