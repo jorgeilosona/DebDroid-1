@@ -18,7 +18,7 @@ Learn more about DebDroid with this [wiki](https://github.com/WMCB-Tech/DebDroid
 Installation is quite easy. follow the steps shown below:
 
 **Requirements:**
-* Android Version 7 (Android 5-6 is still Experimental)
+* Android Version 7 and above (Android 5-6 is still Experimental)
 * 1.5gb of free space
 * Stable Internet Connection (The installation is sensitive to network failures)
 * Termux (Latest Version is recommended)
@@ -35,7 +35,7 @@ I assume that you placed the downloaded file to downloads folder
 
 4.) Run Second Stage (For running GUI Apps using Termux's TigerVNC ) \
 `debdroid --install-deps` \
-this will install tigervnc and xorg-xhost. for Android 7 and above only. Although for CLI use only. you don't need to use this.
+this will install tigervnc and xorg-xhost. for Android 7 and above only. Although for CLI use only or running Android 5-6. you don't need to use this.
 
 # Preparing The Container
 After all packages is installed. you can install it by typing: \
