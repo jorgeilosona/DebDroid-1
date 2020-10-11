@@ -35,7 +35,7 @@ I assume that you placed the downloaded file to downloads folder
 
 4.) Run Second Stage (For running GUI Apps Easily) \
 `debdroid --install-deps` \
-this will install tigervnc and xorg-xhost. for Android 7 and above only
+this will install tigervnc and xorg-xhost. for Android 7 and above only. Although for CLI use only. you don't need to use this.
 
 # Preparing The Container
 After all packages is installed. you can install it by typing: \
