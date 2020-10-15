@@ -1,5 +1,5 @@
 #!/data/data/com.termux/files/usr/bin/bash
-### DEBDROID v2.14.
+### DEBDROID v2.15.
 ### Made By WMCB Tech @wmcbtech30
 ### This script should not be modified at some cases
 ### Dependencies Required (x11-repo is needed as there's an issues about tigervnc in debian)
@@ -78,8 +78,6 @@ install-debian() {
 	install $CONFIG/stat $ROOTFS/proc/stat &&
 	install $CONFIG/version $ROOTFS/proc/version &&
 	install $CONFIG/libdone.so.9 $ROOTFS/usr/lib/.libdone.so.9 &&
-	mkdir -p $ROOTFS/var/binds/ &&
-	install $CONFIG/desktop-launch.sh $ROOTFS/var/binds/desktop-launch.sh &&
 	install -m 755 $CONFIG/distro-config.sh $ROOTFS/opt/distro-config.sh &&
 	bash $CONFIG/configure.sh &&
 	echo "Cleaning Up....."
@@ -103,87 +101,6 @@ uninstall() {
 }
 
 launch() {
-	if [ -e $STATUS ]; then
-    		echo ""
-	else
-    		echo "Cannot start Debian Container. Please install it using debdroid --install"
-		exit 2
-	fi
-	unset LD_PRELOAD
-	vncserver -SecurityTypes none -xstartup $CONFIG/xstartup -name "DebDroid" :1 > /dev/null 2>&1
-	echo ""
-	echo "VNC Server is Running as Port 5901. as to be able to run GUI Applications"
-	echo "To Stop VNC Server. type 'debdroid-stop-server'"
-	proot --link2symlink --kill-on-exit \
-	-0 -r $ROOTFS -p \
-	-b /dev \
-	-b /proc \
-	-b /sys \
-	-b /dev/urandom:/dev/random \
-	-b /proc/self/fd:/dev/fd \
-	-b /proc/self/fd/0:/dev/stdin \
-	-b /proc/self/fd/1:/dev/stdout \
-	-b /proc/self/fd/2:/dev/stderr \
-	-b $PREFIX/tmp:/dev/shm \
-	-b $PREFIX/tmp:/tmp \
-	-b $ROOTFS/proc/stat:/proc/stat \
-	-b $ROOTFS/proc/version:/proc/version \
-	-b $ROOTFS/var/binds/desktop-launch.sh:/etc/profile.d/desktop-launch.sh \
-	-b /storage/emulated/0:/sdcard \
-	-b /data \
-	-b /system \
-	-b /:/host-rootfs \
-	/usr/bin/env -i \
-	TERM=xterm-256color \
-	HOME=/root \
-	USER=root \
-	PATH="$PATHBASE" \
-	TMPDIR=/tmp \
-	/bin/su -l $(cat $ROOTFS/etc/userinfo.rc)
-	debdroid-stop-server
-}
-
-launch-su() {
-	if [ -e $STATUS ]; then
-                echo ""
-        else
-                echo "Cannot start Debian Container. Please install it using debdroid --install"
-		exit 2
-        fi
-        unset LD_PRELOAD
-        vncserver -SecurityTypes none -xstartup $CONFIG/xstartup -name "DebDroid" :1 > /dev/null 2>&1
-	echo ""
-        echo "VNC Server is Running as Port 5901. as to be able to run GUI Applications"
-	echo "To Stop VNC Server. type 'debdroid-stop-server'"
-        proot --link2symlink --kill-on-exit \
-        -0 -r $ROOTFS -p \
-        -b /dev \
-        -b /proc \
-        -b /sys \
-        -b /dev/urandom:/dev/random \
-        -b /proc/self/fd:/dev/fd \
-        -b /proc/self/fd/0:/dev/stdin \
-        -b /proc/self/fd/1:/dev/stdout \
-        -b /proc/self/fd/2:/dev/stderr \
-        -b $PREFIX/tmp:/dev/shm \
-        -b $PREFIX/tmp:/tmp \
-        -b $ROOTFS/proc/stat:/proc/stat \
-        -b $ROOTFS/proc/version:/proc/version \
-	-b $ROOTFS/var/binds/desktop-launch.sh:/etc/profile.d/desktop-launch.sh \
-        -b /storage/emulated/0:/sdcard \
-        -b /data \
-        -b /system \
-        -b /:/host-rootfs \
-        /usr/bin/env -i \
-        TERM=xterm-256color \
-        HOME=/root \
-        USER=root \
-        PATH="$PATHBASE" \
-        TMPDIR=/tmp /bin/su -l
-	debdroid-stop-server
-}
-
-launch-cli() {
 	if [ -e $STATUS ]; then
     		echo ""
 	else
@@ -218,10 +135,41 @@ launch-cli() {
 	/bin/su -l $(cat $ROOTFS/etc/userinfo.rc
 }
 
-install-deps() {
-	apt install x11-repo -y &&
-	apt install xorg-xhost tigervnc -y
+launch() {
+	if [ -e $STATUS ]; then
+    		echo ""
+	else
+    		echo "Cannot start Debian Container. Please install it using debdroid --install"
+		exit 2
+	fi
+	unset LD_PRELOAD
+	proot --link2symlink --kill-on-exit \
+	-0 -r $ROOTFS -p \
+	-b /dev \
+	-b /proc \
+	-b /sys \
+	-b /dev/urandom:/dev/random \
+	-b /proc/self/fd:/dev/fd \
+	-b /proc/self/fd/0:/dev/stdin \
+	-b /proc/self/fd/1:/dev/stdout \
+	-b /proc/self/fd/2:/dev/stderr \
+	-b $PREFIX/tmp:/dev/shm \
+        -b $PREFIX/tmp:/tmp \
+	-b $ROOTFS/proc/stat:/proc/stat \
+	-b $ROOTFS/proc/version:/proc/version \
+	-b /storage/emulated/0:/sdcard \
+	-b /data \
+	-b /system \
+	-b /:/host-rootfs \
+	/usr/bin/env -i \
+	TERM=xterm-256color \
+	HOME=/root \
+	USER=root \
+	PATH="$PATHBASE" \
+	TMPDIR=/tmp \
+	/bin/su -l
 }
+
 
 if [ $# = 0 ]; then
 	show_help
@@ -241,14 +189,8 @@ case "$CMD" in
 	--launch-su)
 		launch-su
 		;;
-	--launch-cli)
-		launch-cli
-		;;
 	-h|--show-help)
 		show_help
-		;;
-        --install-deps|--second-stage)
-		install-deps
 		;;
 	*) echo "Unknown Command: '$CMD'"; exit 2;;
 esac
