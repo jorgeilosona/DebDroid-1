@@ -2,8 +2,8 @@
 ### DEBDROID v2.15.
 ### Made By WMCB Tech @wmcbtech30
 ### This script should not be modified at some cases
-### Dependencies Required (x11-repo is needed as there's an issues about tigervnc in debian)
-### x11-repo, xorg-xhost, tigervnc, proot, tar, wget, dialog
+### Dependencies Required
+### proot, tar, wget, dialog
 ###
 ### This script uses Andronix Resources as if debootstrap may fail the installation
 set -e -u
