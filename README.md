@@ -8,7 +8,7 @@ Learn more about DebDroid with this [wiki](https://github.com/WMCB-Tech/DebDroid
 
 # Features
 * Support for Root and Non-root User Accounts
-* Run your GUI Apps easily using VNC
+* Run your Favorite Linux IDE's, Apps, Utilities
 * Full Debian Environment in your Pocket
 * No Rooting Required
 * Supports Desktop Environment (LXDE, LXQT, Mate, XFCE)
@@ -18,8 +18,7 @@ Learn more about DebDroid with this [wiki](https://github.com/WMCB-Tech/DebDroid
 Installation is quite easy. follow the steps shown below:
 
 **Requirements:**
-* Android Version 7 and above (Android 5-6 is still Experimental)
-* 1.5gb of free space
+* 1.2gb of free space
 * Stable Internet Connection (The installation is sensitive to network failures)
 * Termux (Latest Version is recommended)
 * Root Disabled (Running as root will fail)
@@ -32,10 +31,6 @@ Installation is quite easy. follow the steps shown below:
 3.) Install the package by typing: \
 `apt install ./path/to/debdroid.deb` \
 I assume that you placed the downloaded file to downloads folder
-
-4.) Run Second Stage (For running GUI Apps using Termux's TigerVNC ) \
-`debdroid --install-deps` \
-this will install tigervnc and xorg-xhost. for Android 7 and above only. Although for CLI use only or running Android 5-6. you don't need to use this.
 
 # Preparing The Container
 After all packages is installed. you can install it by typing: \
@@ -55,21 +50,10 @@ to gain access via sudo.
  You can start the container by typing: \
  ```debdroid --launch``` or ```debdroid --launch-su``` (as root user) or ```debdroid --launch-cli``` (without VNC)
  
- and it should drop you to debian shell \
- You can connect to the GUI by connecting the VNC Port 5901 with Xterm (without any WM or DE) \
- If you have installed XFCE or Other Desktop environment. you can edit this file: \
- `/etc/profile.d/desktop-launch.sh`
- 
- **It's not starting. and dosen't drop me to debian shell** \
- It's possible that you have another VNC Server is running at port 5901. you can close it or
- if you're using Termux VNC. type the command: \
- `debdroid-stop-server`
- 
- The Reason why it won't start is to prevent the profile.d from multiplying at logon. as a walkaround. launch the debian shell without VNC:
- `debdroid --launch-cli`
+ and it should drop you to debian shell
  
  To Shutdown the linux environment. simply type `exit` to debian shell \
- Note that it will kill all processes at exit. and stops VNC Server as well to prevent battery drainage
+ Note that it will kill all processes at exit to prevent battery drainage
  
  # Uninstalling the Container
  Uninstalling is simple. simply type: \
@@ -78,9 +62,7 @@ to gain access via sudo.
  Note that instead of asking you to delete it. you have 15 seconds before the removal so better to hit Ctrl-C before it's too late
 
 # Credits
-[Xhost](https://www.computerhope.com/unix/xhost.htm) \
 [PRoot](https://proot-me.github.io/) \
-[TigerVNC](https://tigervnc.org/) \
 [Termux](https://termux.com/)
 
 
