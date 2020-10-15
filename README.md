@@ -48,7 +48,7 @@ to gain access via sudo.
  
  # Starting The Container
  You can start the container by typing: \
- ```debdroid --launch``` or ```debdroid --launch-su``` (as root user) or ```debdroid --launch-cli``` (without VNC)
+ ```debdroid --launch``` or ```debdroid --launch-su``` (as root user)
  
  and it should drop you to debian shell
  
