@@ -30,7 +30,8 @@ Installation is quite easy. follow the steps shown below:
 
 3.) Install the package by typing: \
 `apt install ./path/to/debdroid.deb` \
-I assume that you placed the downloaded file to downloads folder
+I assume that you placed the downloaded file to downloads folder \
+and the `./path/to` is where the location of your file. copy-pasting steps is not cool
 
 # Preparing The Container
 After all packages is installed. you can install it by typing: \
