@@ -133,7 +133,7 @@ launch() {
 	/bin/su -l $(cat $ROOTFS/etc/userinfo.rc
 }
 
-launch() {
+launch-su() {
 	if [ -e $STATUS ]; then
     		echo ""
 	else
