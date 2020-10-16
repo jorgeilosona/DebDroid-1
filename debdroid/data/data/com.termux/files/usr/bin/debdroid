@@ -37,10 +37,8 @@ show_help(){
 	echo ""
 	echo " --install	Installs an Debian Container"
 	echo " --uninstall	Uninstalls a Debian Distribution"
-	echo " --launch	Launches Debian Distribution as Regular User (With GUI)"
-	echo " --launch-su	Launches Debian Distribution as Root (With GUI)"
-	echo " --launch-cli	Launches Debian Distribution without GUI"
-        echo " --second-stage	Installs Required Dependencies. Same as '--install-deps' option"
+	echo " --launch	Launches Debian Distribution as Regular User"
+	echo " --launch-su	Launches Debian Distribution as Root"
 	exit 2
 }
 
