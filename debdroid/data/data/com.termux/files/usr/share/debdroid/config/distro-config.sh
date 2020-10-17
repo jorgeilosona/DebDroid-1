@@ -11,7 +11,7 @@ set -e -u
 ## Install Packages
 apt update
 apt upgrade -y
-apt install nano sudo busybox udisks2 dbus-x11 -y
+apt install nano sudo busybox udisks2 dbus-x11 locales -y
 apt autoremove -y
 apt clean
 
