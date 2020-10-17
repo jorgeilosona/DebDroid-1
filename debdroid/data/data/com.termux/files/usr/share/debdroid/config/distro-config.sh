@@ -21,6 +21,7 @@ echo "Exporting libgcc_s.so.1 as a walkaround for Tigervnc for pre-android 7 cli
 echo "export LD_PRELOAD=$(find /usr/lib -name libgcc_s.so.1)" > /etc/profile.d/walkaround.sh
 echo "Adding /sbin path for non-root users"
 echo "export PATH=/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin:/usr/games:/usr/local/games" > /etc/profile.d/sbin.sh
+echo "export LANG=C.UTF-8" > /etc/profile.d/langfix.sh
 
 ## Configure udisks2 as if udisks2 interrupts apt
 echo ""
