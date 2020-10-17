@@ -14,4 +14,5 @@ proot --link2symlink --kill-on-exit \
  USER=root \
  HOME=/root \
  PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/games:/usr/local/bin:/usr/local/sbin:/usr/local/games:/opt \
+ LANG=C.UTF-8 \
  /opt/distro-config.sh
