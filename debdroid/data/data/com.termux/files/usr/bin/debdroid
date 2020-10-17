@@ -131,6 +131,7 @@ launch() {
 	USER=root \
 	PATH="$PATHBASE" \
 	TMPDIR=/tmp \
+	LANG=C.UTF-8 \
 	/bin/su -l $(cat $ROOTFS/etc/userinfo.rc)
 }
 
@@ -166,6 +167,7 @@ launch-su() {
 	USER=root \
 	PATH="$PATHBASE" \
 	TMPDIR=/tmp \
+	LANG=C.UTF-8 \
 	/bin/su -l
 }
 
@@ -199,6 +201,7 @@ launch-isol() {
 	USER=root \
 	PATH="$PATHBASE" \
 	TMPDIR=/tmp \
+	LANG=C.UTF-8 \
 	/bin/su -l $(cat $ROOTFS/etc/userinfo.rc)
 }
 
