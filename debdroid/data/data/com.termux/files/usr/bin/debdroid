@@ -1,5 +1,5 @@
 #!/data/data/com.termux/files/usr/bin/bash
-### DEBDROID v2.15.
+### DEBDROID v2.15-R2.
 ### Made By WMCB Tech @wmcbtech30
 ### This script should not be modified at some cases
 ### Dependencies Required
@@ -39,6 +39,7 @@ show_help(){
 	echo " --uninstall	Uninstalls a Debian Distribution"
 	echo " --launch	Launches Debian Distribution as Regular User"
 	echo " --launch-su	Launches Debian Distribution as Root"
+	echo " --no-shared	Launches Debian Distribution without host storage access"
 	exit 2
 }
 
@@ -130,7 +131,7 @@ launch() {
 	USER=root \
 	PATH="$PATHBASE" \
 	TMPDIR=/tmp \
-	/bin/su -l $(cat $ROOTFS/etc/userinfo.rc
+	/bin/su -l $(cat $ROOTFS/etc/userinfo.rc)
 }
 
 launch-su() {
@@ -168,6 +169,38 @@ launch-su() {
 	/bin/su -l
 }
 
+launch-isol() {
+	if [ -e $STATUS ]; then
+    		echo ""
+	else
+    		echo "Cannot start Debian Container. Please install it using debdroid --install"
+		exit 2
+	fi
+	unset LD_PRELOAD
+	proot --link2symlink --kill-on-exit \
+	-0 -r $ROOTFS -p \
+	-b /dev \
+	-b /proc \
+	-b /sys \
+	-b /dev/urandom:/dev/random \
+	-b /proc/self/fd:/dev/fd \
+	-b /proc/self/fd/0:/dev/stdin \
+	-b /proc/self/fd/1:/dev/stdout \
+	-b /proc/self/fd/2:/dev/stderr \
+	-b $PREFIX/tmp:/dev/shm \
+        -b $PREFIX/tmp:/tmp \
+	-b $ROOTFS/proc/stat:/proc/stat \
+	-b $ROOTFS/proc/version:/proc/version \
+	-b /storage/emulated/0:/sdcard \
+	-w /root \
+	/usr/bin/env -i \
+	TERM=xterm-256color \
+	HOME=/root \
+	USER=root \
+	PATH="$PATHBASE" \
+	TMPDIR=/tmp \
+	/bin/su -l $(cat $ROOTFS/etc/userinfo.rc)
+}
 
 if [ $# = 0 ]; then
 	show_help
@@ -186,6 +219,9 @@ case "$CMD" in
 		;;
 	--launch-su)
 		launch-su
+		;;
+	--no-shared)
+		launch-isol
 		;;
 	-h|--show-help)
 		show_help
