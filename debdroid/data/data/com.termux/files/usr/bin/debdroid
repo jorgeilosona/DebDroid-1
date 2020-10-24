@@ -30,16 +30,32 @@ check-network-connectivity(){
 	fi
 }
 
+check-dlcache() {
+	if [ -e $HOME/.cache/dlcache.tar.xz ]; then
+		echo "Existing Image File Found. Skipping Download and Extracting the rootfs"
+		echo "Unpacking The Base System.... This may take a few minutes"
+		proot --link2symlink tar -xf $HOME/.cache/dlcache.tar.xz --exclude dev -C $ROOTFS > /dev/null 2>&1
+	else
+		echo "Downloading the Debian Image file....."
+		mkdir -p $HOME/.cache >/dev/null 2>&1 &&
+		wget "https://github.com/WMCB-Tech/AndronixOrigin/raw/master/Rootfs/Debian/${archurl}/debian-rootfs-${archurl}.tar.xz?raw=true" -O $HOME/.cache/dlcache.tar.xz &&
+		echo "Unpacking The Base System.... This may take a few minutes"
+		proot --link2symlink tar -xf $HOME/.cache/dlcache.tar.xz --exclude dev -C $ROOTFS > /dev/null 2>&1
+	fi
+}
+
 show_help(){
 	echo "DebDroid: An Easy to Use Debian Installer for non-rooted devices"
 	echo ""
 	echo "Usage: debdroid [command]"
 	echo ""
-	echo " --install	Installs an Debian Container"
+	echo " --install	Installs an Debian Distribution"
 	echo " --uninstall	Uninstalls a Debian Distribution"
 	echo " --launch	Launches Debian Distribution as Regular User"
 	echo " --launch-su	Launches Debian Distribution as Root"
 	echo " --no-shared	Launches Debian Distribution without host storage access"
+	echo " --import	Imports the Debian Container Image"
+	echo " --export	Exports the Debian Container Image"
 	exit 2
 }
 
@@ -50,8 +66,8 @@ install-debian() {
 	else
     		echo "Preparing to Install a Debian Container."
 	fi
-        ### Check Network
-        check-network-connectivity
+	### Check Network
+	check-network-connectivity
 	### Check for an Architecture
 	case `dpkg --print-architecture` in
 		aarch64)
@@ -69,10 +85,7 @@ install-debian() {
 		*)
 			echo "unknown architecture"; exit 1 ;;
 	esac
-	echo "Downloading the Debian Image file....."
-	wget "https://github.com/WMCB-Tech/AndronixOrigin/raw/master/Rootfs/Debian/${archurl}/debian-rootfs-${archurl}.tar.xz?raw=true" -O $PREFIX/tmp/dlcache.tar.xz &&
-	echo "Unpacking The Base System.... This may take a few minutes"
-	proot --link2symlink tar -xf $PREFIX/tmp/dlcache.tar.xz --exclude dev -C $ROOTFS > /dev/null 2>&1 &&
+	check-dlcache
 	echo "Configuring the Base System.. This may take Several Minutes"
 	install $CONFIG/stat $ROOTFS/proc/stat &&
 	install $CONFIG/version $ROOTFS/proc/version &&
@@ -82,15 +95,14 @@ install-debian() {
 	echo "Cleaning Up....."
 	echo ""
 	rm -rf $ROOTFS/opt/distro-config.sh &&
-	rm -rf $PREFIX/tmp/dlcache.tar.xz &&
 	echo "Debian Container Successfully Installed. To Start type: debdroid --launch"
 	exit 1
 }
 
 uninstall() {
-	echo "WARNING: you are about to uninstall a linux distribution in 15 seconds"
+	echo "WARNING: you are about to uninstall a linux distribution in 10 seconds"
 	echo "to stop hit Ctrl-C before Uninstallation"
-	sleep 15 &&
+	sleep 10 &&
 	echo "Uninstalling an Linux Distro... "
 	chmod 777 -R $ROOTFS > /dev/null 2>&1
 	rm -rf $STATEFUL/rootfs > /dev/null 2>&1 &&
@@ -118,7 +130,7 @@ launch() {
 	-b /proc/self/fd/1:/dev/stdout \
 	-b /proc/self/fd/2:/dev/stderr \
 	-b $PREFIX/tmp:/dev/shm \
-        -b $PREFIX/tmp:/tmp \
+	-b $PREFIX/tmp:/tmp \
 	-b $ROOTFS/proc/stat:/proc/stat \
 	-b $ROOTFS/proc/version:/proc/version \
 	-b /storage/emulated/0:/sdcard \
@@ -154,7 +166,7 @@ launch-su() {
 	-b /proc/self/fd/1:/dev/stdout \
 	-b /proc/self/fd/2:/dev/stderr \
 	-b $PREFIX/tmp:/dev/shm \
-        -b $PREFIX/tmp:/tmp \
+	-b $PREFIX/tmp:/tmp \
 	-b $ROOTFS/proc/stat:/proc/stat \
 	-b $ROOTFS/proc/version:/proc/version \
 	-b /storage/emulated/0:/sdcard \
@@ -184,16 +196,14 @@ launch-isol() {
 	-b /dev \
 	-b /proc \
 	-b /sys \
-	-b /dev/urandom:/dev/random \
 	-b /proc/self/fd:/dev/fd \
 	-b /proc/self/fd/0:/dev/stdin \
 	-b /proc/self/fd/1:/dev/stdout \
 	-b /proc/self/fd/2:/dev/stderr \
 	-b $PREFIX/tmp:/dev/shm \
-        -b $PREFIX/tmp:/tmp \
+	-b $PREFIX/tmp:/tmp \
 	-b $ROOTFS/proc/stat:/proc/stat \
 	-b $ROOTFS/proc/version:/proc/version \
-	-b /storage/emulated/0:/sdcard \
 	-w /root \
 	/usr/bin/env -i \
 	TERM=xterm-256color \
@@ -204,6 +214,7 @@ launch-isol() {
 	LANG=C.UTF-8 \
 	/bin/su -l $(cat $ROOTFS/etc/userinfo.rc)
 }
+
 
 if [ $# = 0 ]; then
 	show_help
@@ -225,6 +236,12 @@ case "$CMD" in
 		;;
 	--no-shared)
 		launch-isol
+		;;
+	--export)
+		exec $STATEFUL/lib/libbackup-rootfs.so
+		;;
+	--import)
+		exec $STATEFUL/lib/librestore-rootfs.so
 		;;
 	-h|--show-help)
 		show_help
