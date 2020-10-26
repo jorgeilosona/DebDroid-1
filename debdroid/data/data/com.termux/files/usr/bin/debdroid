@@ -1,5 +1,5 @@
 #!/data/data/com.termux/files/usr/bin/bash
-### DEBDROID v2.16-R2.
+### DEBDROID v2.16-R3.
 ### Made By WMCB Tech @wmcbtech30
 ### This script should not be modified at some cases
 ### Dependencies Required
@@ -89,6 +89,7 @@ install-debian() {
 	echo "Configuring the Base System.. This may take Several Minutes"
 	install $CONFIG/stat $ROOTFS/proc/stat &&
 	install $CONFIG/version $ROOTFS/proc/version &&
+	install $CONFIG/resolv.conf $ROOTFS/etc/resolv.conf &&
 	install $CONFIG/libdone.so.9 $ROOTFS/usr/lib/.libdone.so.9 &&
 	install -m 755 $CONFIG/distro-config.sh $ROOTFS/opt/distro-config.sh &&
 	bash $CONFIG/configure.sh &&
