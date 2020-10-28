@@ -9,7 +9,7 @@
 set -e -u
 ROOTFS="$PREFIX/share/debdroid/rootfs"
 CONFIG="$PREFIX/share/debdroid/config"
-PATHBASE="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/usr/games:/usr/local/games"
+PATHBASE="/usr/local/bin:/usr/local/sbin:/usr/local/games:/bin:/sbin:/usr/bin:/usr/sbin:/usr/games"
 STATEFUL="$PREFIX/share/debdroid"
 STATUS="$PREFIX/share/debdroid/rootfs/usr/lib/.libdone.so.9"
 
