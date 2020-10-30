@@ -70,7 +70,7 @@ https://drive.google.com/file/d/1-bESv0kJvOCwYeUZ6Y3FXPpWh62Xb_U5/view?usp=shari
 https://drive.google.com/file/d/1ccPeOmSrfaqZQwcSSohZkHudg7AqLGX-/view?usp=sharing
 
 If you're running Android 5-6. you may encounter problems \
-For more information click here
+For more information click [here](https://github.com/WMCB-Tech/DebDroid/wiki/Using-%22.export%22-files)
 
 # Credits
 [PRoot](https://proot-me.github.io/) \
