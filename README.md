@@ -62,6 +62,16 @@ to gain access via sudo.
  
  Note that instead of asking you to delete it. you have 15 seconds before the removal so better to hit Ctrl-C before it's too late
 
+# Alternate OS Images
+Since DebDroid can run other distributions. i have provided a 2 images. for now we are using a Free of Service so google drive has limits and soon i may setup GIT LFS and we only rely on ARM64 Architectures
+* Arch Linux (ARM64): \
+https://drive.google.com/file/d/1-bESv0kJvOCwYeUZ6Y3FXPpWh62Xb_U5/view?usp=sharing
+* Fedora (ARM64): \
+https://drive.google.com/file/d/1ccPeOmSrfaqZQwcSSohZkHudg7AqLGX-/view?usp=sharing
+
+If you're running Android 5-6. you may encounter problems \
+For more information click here
+
 # Credits
 [PRoot](https://proot-me.github.io/) \
 [Termux](https://termux.com/)
